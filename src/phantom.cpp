@@ -50,6 +50,7 @@
 #include "terminal.h"
 #include "utils.h"
 #include "webpage.h"
+#include "printer.h"
 #include "webserver.h"
 
 static Phantom* phantomInstance = NULL;
@@ -326,6 +327,11 @@ QObject* Phantom::createWebPage()
     }
 
     return page;
+}
+
+QObject* Phantom::createPrinter()
+{
+    return new Printer(this);
 }
 
 QObject* Phantom::createWebServer()

@@ -4,7 +4,7 @@ if(!equals(QT_MAJOR_VERSION, 5)|!equals(QT_MINOR_VERSION, 6)) {
 
 TEMPLATE = app
 TARGET = phantomjs
-QT += network webkitwidgets
+QT += network webkitwidgets printsupport
 CONFIG += console
 
 DESTDIR = ../bin
@@ -30,6 +30,7 @@ HEADERS = \
     filesystem.h \
     networkaccessmanager.h \
     phantom.h \
+    printer.h \
     repl.h \
     system.h \
     terminal.h \
@@ -49,6 +50,7 @@ SOURCES = \
     main.cpp \
     networkaccessmanager.cpp \
     phantom.cpp \
+    printer.cpp \
     repl.cpp \
     system.cpp \
     terminal.cpp \
@@ -63,6 +65,7 @@ OTHER_FILES = \
     modules/cookiejar.js \
     modules/fs.js \
     modules/webpage.js \
+    modules/printer.js \
     modules/webserver.js \
     repl.js
 
