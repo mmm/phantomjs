@@ -42,7 +42,8 @@ HEADERS += \
     config.h \
     childprocess.h \
     repl.h \
-    crashdump.h
+    crashdump.h \
+    printer.h
 
 SOURCES += phantom.cpp \
     callback.cpp \
@@ -62,13 +63,15 @@ SOURCES += phantom.cpp \
     config.cpp \
     childprocess.cpp \
     repl.cpp \
-    crashdump.cpp
+    crashdump.cpp \
+    printer.cpp
 
 OTHER_FILES += \
     bootstrap.js \
     configurator.js \
     modules/fs.js \
     modules/webpage.js \
+    modules/printer.js \
     modules/webserver.js \
     modules/child_process.js \
     modules/cookiejar.js \
