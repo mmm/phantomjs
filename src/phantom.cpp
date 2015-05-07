@@ -44,6 +44,7 @@
 #include "terminal.h"
 #include "utils.h"
 #include "webpage.h"
+#include "printer.h"
 #include "webserver.h"
 #include "repl.h"
 #include "system.h"
@@ -317,6 +318,11 @@ QObject* Phantom::createWebPage()
     }
 
     return page;
+}
+
+QObject* Phantom::createPrinter()
+{
+    return new Printer(this);
 }
 
 QObject* Phantom::createWebServer()
