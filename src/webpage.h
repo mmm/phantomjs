@@ -525,7 +525,7 @@ private slots:
     void handleRepaintRequested(const QRect& dirtyRect);
 
 private:
-    QImage renderImage();
+    QImage renderImage(bool onlyViewport = false);
     bool renderPdf(const QString& fileName);
     void applySettings(const QVariantMap& defaultSettings);
     QString userAgent() const;

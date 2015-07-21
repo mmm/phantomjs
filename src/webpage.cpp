@@ -982,7 +982,8 @@ bool WebPage::render(const QString& fileName, const QVariantMap& option)
     if (format == "pdf") {
         retval = renderPdf(outFileName);
     } else {
-        QImage rawPageRendering = renderImage();
+        bool onlyViewport = option.contains("onlyViewport") && option.value("onlyViewport").toBool();
+        QImage rawPageRendering = renderImage(onlyViewport);
 
         const char* f = 0; // 0 is QImage#save default
         if (format != "") {
@@ -1053,17 +1054,22 @@ QString WebPage::renderBase64(const QByteArray& format)
     return "";
 }
 
-QImage WebPage::renderImage()
+QImage WebPage::renderImage(bool onlyViewport)
 {
-    QSize contentsSize = m_mainFrame->contentsSize();
-    contentsSize -= QSize(m_scrollPosition.x(), m_scrollPosition.y());
-    QRect frameRect = QRect(QPoint(0, 0), contentsSize);
+    QRect frameRect;
+    QSize viewportSize = m_customWebPage->viewportSize();
+    if (onlyViewport) {
+        frameRect = QRect(QPoint(0, 0), viewportSize);
+    } else {
+        QSize contentsSize = m_mainFrame->contentsSize();
+        contentsSize -= QSize(m_scrollPosition.x(), m_scrollPosition.y());
+        frameRect = QRect(QPoint(0, 0), contentsSize);
+        m_customWebPage->setViewportSize(contentsSize);
+    }
+
     if (!m_clipRect.isNull()) {
         frameRect = m_clipRect;
     }
-
-    QSize viewportSize = m_customWebPage->viewportSize();
-    m_customWebPage->setViewportSize(contentsSize);
 
 #ifdef Q_OS_WIN32
     QImage::Format format = QImage::Format_ARGB32_Premultiplied;
@@ -1105,8 +1111,9 @@ QImage WebPage::renderImage()
             painter.end();
         }
     }
-
-    m_customWebPage->setViewportSize(viewportSize);
+    if (!onlyViewport) {
+        m_customWebPage->setViewportSize(viewportSize);
+    }
     return buffer;
 }
 
